@@ -5,11 +5,8 @@ var esquema = new mongoose.Schema({
     description: String,
     created: { type: Date, default: Date.now() },
     lastModified: { type: Date, default: Date.now() },
-    code: {
-        html: String,
-        css: String,
-        js: String
-    }
+    language: String,
+    code: String
 });
 
-module.exports = mongoose.model('Projects', esquema, 'Projects');
+module.exports = mongoose.model('Snippets', esquema, 'Snippets');

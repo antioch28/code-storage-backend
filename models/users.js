@@ -5,6 +5,7 @@ var esquema = new mongoose.Schema({
     email: String,
     password: String,
     projects: [{ _id: mongoose.Types.ObjectId }],
+    sharedWithMe: [{ _id: mongoose.Types.ObjectId }],
     profile: String,
     plan: {
         _id: mongoose.Types.ObjectId,
@@ -14,7 +15,7 @@ var esquema = new mongoose.Schema({
     settings: {
         theme: String,
         editorLayout: String,
-        autoHTMLTemplate: String
+        autoHTMLTemplate: Boolean
     },
     paymentMethod: {
         _id: mongoose.Types.ObjectId,
@@ -26,4 +27,4 @@ var esquema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Users', esquema);
+module.exports = mongoose.model('Users', esquema, 'Users');

@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-var Projects = require('../models/projects');
+var Snippets = require('../models/snippets');
 var mongoose = require('mongoose');
 
-// Obtener datos de un proyecto específico
-router.get('/:idProyecto', (req, res) => {
-    Projects.findById(req.params.idProyecto)
+// Obtener datos de un snippet específico
+router.get('/:idSnippet', (req, res) => {
+    Snippets.findById(req.params.idSnippet)
         .then(data => {
             res.send(data);
             res.end();
@@ -17,11 +17,9 @@ router.get('/:idProyecto', (req, res) => {
         });
 });
 
-
-// Crear un nuevo proyecto
+// Crear un nuevo snippet
 router.post('/', (req, res) => {
-    var newProject = new Projects(req.body);
-    console.log(newProject);
+    var newProject = new Snippets(req.body);
     newProject.save()
         .then(data => {
             res.send(data);
@@ -33,9 +31,9 @@ router.post('/', (req, res) => {
         });
 });
 
-// Actualizar un proyecto
-router.put('/:idProyecto', (req, res) => {
-    Projects.findByIdAndUpdate(req.params.idProyecto, req.body, { new: true })
+// Actualizar un snippet
+router.put('/:idSnippet', (req, res) => {
+    Snippets.findByIdAndUpdate(req.params.idSnippet, req.body, { new: true })
         .then(data => {
             res.send(data);
             res.end();
@@ -46,9 +44,9 @@ router.put('/:idProyecto', (req, res) => {
         });
 });
 
-// Eliminar un proyecto
-router.delete('/:idProyecto', (req, res) => {
-    Projects.remove({ _id: mongoose.Types.ObjectId(req.params.idProyecto) })
+// Eliminar un snippet
+router.delete('/:idSnippet', (req, res) => {
+    Snippets.remove({ _id: mongoose.Types.ObjectId(req.params.idSnippet) })
         .then(data => {
             res.send(data);
             res.end();

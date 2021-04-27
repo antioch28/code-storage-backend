@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-var Projects = require('../models/projects');
+var Plans = require('../models/plans');
 var mongoose = require('mongoose');
 
-// Obtener datos de un proyecto específico
-router.get('/:idProyecto', (req, res) => {
-    Projects.findById(req.params.idProyecto)
+// Obtener planes
+router.get('/', (req, res) => {
+    Plans.find({})
         .then(data => {
             res.send(data);
             res.end();
@@ -17,12 +17,23 @@ router.get('/:idProyecto', (req, res) => {
         });
 });
 
+// Obtener datos de un plan específico
+router.get('/:idPlan', (req, res) => {
+    Plans.findById(req.params.idPlan)
+        .then(data => {
+            res.send(data);
+            res.end();
+        })
+        .catch(err => {
+            res.send(err);
+            res.end();
+        });
+});
 
-// Crear un nuevo proyecto
+// Agregar un plan
 router.post('/', (req, res) => {
-    var newProject = new Projects(req.body);
-    console.log(newProject);
-    newProject.save()
+    var newPlan = new Plans(req.body);
+    newPlan.save()
         .then(data => {
             res.send(data);
             res.end();
@@ -33,9 +44,9 @@ router.post('/', (req, res) => {
         });
 });
 
-// Actualizar un proyecto
-router.put('/:idProyecto', (req, res) => {
-    Projects.findByIdAndUpdate(req.params.idProyecto, req.body, { new: true })
+// Actualizar un plan
+router.put('/:idPlan', (req, res) => {
+    Plans.findByIdAndUpdate(req.params.idPlan, req.body, { new: true })
         .then(data => {
             res.send(data);
             res.end();
@@ -46,9 +57,9 @@ router.put('/:idProyecto', (req, res) => {
         });
 });
 
-// Eliminar un proyecto
-router.delete('/:idProyecto', (req, res) => {
-    Projects.remove({ _id: mongoose.Types.ObjectId(req.params.idProyecto) })
+// Eliminar un plan
+router.delete('/:idPlan', (req, res) => {
+    Plans.findByIdAndDelete(req.params.idPlan)
         .then(data => {
             res.send(data);
             res.end();
