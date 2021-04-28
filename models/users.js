@@ -1,29 +1,30 @@
 var mongoose = require('mongoose');
+var Plans = require('./plans');
 
 var esquema = new mongoose.Schema({
     name: String,
-    email: String,
+    email: { type: String, unique: true },
     password: String,
-    projects: [{ _id: mongoose.Types.ObjectId }],
-    sharedWithMe: [{ _id: mongoose.Types.ObjectId }],
-    profile: String,
+    profile: { type: String, default: "" },
     plan: {
         _id: mongoose.Types.ObjectId,
-        startDate: Date,
+        startDate: { type: Date, default: Date.now() },
         endDate: Date
     },
     settings: {
-        theme: String,
-        editorLayout: String,
-        autoHTMLTemplate: Boolean
+        theme: { type: String, default: "light" },
+        editorLayout: { type: String, default: "grid" },
+        autoHTMLTemplate: { type: Boolean, default: false }
     },
     paymentMethod: {
-        _id: mongoose.Types.ObjectId,
-        cardType: String,
-        ownerName: String,
-        cardNumber: String,
-        expDate: String,
-        ccv: String
+        type: {
+            cardType: String,
+            ownerName: String,
+            cardNumber: String,
+            expDate: String,
+            ccv: String
+        },
+        default: {}
     }
 });
 

@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var auth = require('../middlewares/auth');
 
 var Users = require('../models/users');
 var mongoose = require('mongoose');
@@ -25,16 +26,24 @@ router.get('/:idUsuario', (req, res) => {
     Users.aggregate([{
                 $lookup: {
                     from: "Projects",
-                    localField: "projects._id",
-                    foreignField: "_id",
+                    localField: "_id",
+                    foreignField: "ownerId",
                     as: "projects"
                 }
             },
             {
                 $lookup: {
                     from: "Snippets",
-                    localField: "snippets._id",
-                    foreignField: "_id",
+                    localField: "_id",
+                    foreignField: "ownerId",
+                    as: "snippets"
+                }
+            },
+            {
+                $lookup: {
+                    from: "Folders",
+                    localField: "_id",
+                    foreignField: "ownerId",
                     as: "snippets"
                 }
             },
@@ -82,7 +91,7 @@ router.post('/', (req, res) => {
 });
 
 // Actualizar un usuario
-router.put('/:idUsuario', (req, res) => {
+router.put('/:idUsuario', auth, (req, res) => {
     Users.findByIdAndUpdate(req.params.idUsuario, req.body, { new: true })
         .then(data => {
             res.send(data);

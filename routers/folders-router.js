@@ -3,12 +3,12 @@ var router = express.Router();
 
 var auth = require('../middlewares/auth');
 
-var Snippets = require('../models/snippets');
+var Folders = require('../models/folders');
 var mongoose = require('mongoose');
 
-// Obtener snippets del usuario
+// Obtener folders del usuario
 router.get('/', auth, (req, res) => {
-    Snippets.find({ ownerId: mongoose.Types.ObjectId(req.user) })
+    Folders.find({ ownerId: mongoose.Types.ObjectId(req.user) })
         .then(data => {
             res.send(data);
             res.end();
@@ -19,9 +19,9 @@ router.get('/', auth, (req, res) => {
         });
 });
 
-// Obtener snippets destacados del usuario
+// Obtener folders destacados del usuario
 router.get('/starred', auth, (req, res) => {
-    Snippets.find({ ownerId: mongoose.Types.ObjectId(req.user), starred: true })
+    Folders.find({ ownerId: mongoose.Types.ObjectId(req.user), starred: true })
         .then(data => {
             res.send(data);
             res.end();
@@ -32,9 +32,9 @@ router.get('/starred', auth, (req, res) => {
         });
 });
 
-// Obtener snippets en papelera del usuario
+// Obtener folders en papelera del usuario
 router.get('/deleted', auth, (req, res) => {
-    Snippets.find({ ownerId: mongoose.Types.ObjectId(req.user), deleted: true })
+    Folders.find({ ownerId: mongoose.Types.ObjectId(req.user), deleted: true })
         .then(data => {
             res.send(data);
             res.end();
@@ -45,9 +45,9 @@ router.get('/deleted', auth, (req, res) => {
         });
 });
 
-// Obtener snippets compartidos con el usuario
+// Obtener folders compartidos con el usuario
 router.get('/shared', auth, (req, res) => {
-    Snippets.find({ sharedWith: mongoose.Types.ObjectId(req.user) })
+    Folders.find({ sharedWith: mongoose.Types.ObjectId(req.user) })
         .then(data => {
             res.send(data);
             res.end();
@@ -58,9 +58,9 @@ router.get('/shared', auth, (req, res) => {
         });
 });
 
-// Obtener datos de un snippet específico
-router.get('/:idSnippet', auth, (req, res) => {
-    Snippets.findById(req.params.idSnippet)
+// Obtener datos de un folder específico
+router.get('/:idFolder', auth, (req, res) => {
+    Folders.findById(req.params.idFolder)
         .then(data => {
             res.send(data);
             res.end();
@@ -71,11 +71,11 @@ router.get('/:idSnippet', auth, (req, res) => {
         });
 });
 
-// Crear un nuevo snippet
+// Crear un nuevo folder
 router.post('/', auth, (req, res) => {
-    var newSnippet = new Snippets(req.body);
-    newSnippet.ownerId = mongoose.Types.ObjectId(req.user);
-    newSnippet.save()
+    var newFolder = new Folders(req.body);
+    newFolder.ownerId = mongoose.Types.ObjectId(req.user);
+    newFolder.save()
         .then(data => {
             res.send(data);
             res.end();
@@ -86,9 +86,9 @@ router.post('/', auth, (req, res) => {
         });
 });
 
-// Actualizar un snippet
-router.put('/:idSnippet', auth, (req, res) => {
-    Snippets.findByIdAndUpdate(req.params.idSnippet, req.body, { new: true })
+// Actualizar un folder
+router.put('/:idFolder', auth, (req, res) => {
+    Folders.findByIdAndUpdate(req.params.idFolder, req.body, { new: true })
         .then(data => {
             res.send(data);
             res.end();
@@ -99,9 +99,9 @@ router.put('/:idSnippet', auth, (req, res) => {
         });
 });
 
-// Destacar un snippet
-router.put('/:idSnippet/stare', auth, (req, res) => {
-    Snippets.findByIdAndUpdate(req.params.idSnippet, { $set: { starred: true } }, { new: true })
+// Destacar un folder
+router.put('/:idFolder/stare', auth, (req, res) => {
+    Folders.findByIdAndUpdate(req.params.idFolder, { $set: { starred: true } }, { new: true })
         .then(data => {
             res.send(data);
             res.end();
@@ -112,9 +112,9 @@ router.put('/:idSnippet/stare', auth, (req, res) => {
         });
 });
 
-// Enviar un snippet a papelera
-router.put('/:idSnippet/trash', auth, (req, res) => {
-    Snippets.findByIdAndUpdate(req.params.idSnippet, { $set: { deleted: true } }, { new: true })
+// Enviar un folder a papelera
+router.put('/:idFolder/trash', auth, (req, res) => {
+    Folders.findByIdAndUpdate(req.params.idFolder, { $set: { deleted: true } }, { new: true })
         .then(data => {
             res.send(data);
             res.end();
@@ -125,9 +125,9 @@ router.put('/:idSnippet/trash', auth, (req, res) => {
         });
 });
 
-// Eliminar un snippet
-router.delete('/:idSnippet', (req, res) => {
-    Snippets.remove({ _id: mongoose.Types.ObjectId(req.params.idSnippet) })
+// Eliminar un folder
+router.delete('/:idFolder', auth, (req, res) => {
+    Folders.remove({ _id: mongoose.Types.ObjectId(req.params.idFolder) })
         .then(data => {
             res.send(data);
             res.end();
