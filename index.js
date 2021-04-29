@@ -3,7 +3,7 @@ var cors = require('cors');
 var bodyParser = require('body-parser');
 var database = require('./modules/database');
 
-var port = process.env.port || 3000;
+var port = process.env.PORT || 3000;
 
 // Routers
 var authRouter = require('./routers/auth-router');
