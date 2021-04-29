@@ -30,6 +30,8 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(express.static('public'));
+
 app.use('/auth', authRouter);
 app.use('/folders', foldersRouter);
 app.use('/users', usersRouter);
