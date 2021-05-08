@@ -7,7 +7,7 @@ var dbUrl = process.env.DB_URL || `mongodb://${servidor}/${db}`;
 
 class Database {
     constructor() {
-        mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+        mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
             .then(() => {
                 console.log('Connected to MongoDB');
             }).catch((error) => {

@@ -7,7 +7,7 @@ var esquema = new mongoose.Schema({
     password: String,
     profile: { type: String, default: "" },
     plan: {
-        _id: mongoose.Types.ObjectId,
+        planInfo: { type: mongoose.Types.ObjectId, ref: "Plans" },
         startDate: { type: Date, default: Date.now() },
         endDate: Date
     },
@@ -17,14 +17,10 @@ var esquema = new mongoose.Schema({
         autoHTMLTemplate: { type: Boolean, default: false }
     },
     paymentMethod: {
-        type: {
-            cardType: String,
-            ownerName: String,
-            cardNumber: String,
-            expDate: String,
-            ccv: String
-        },
-        default: {}
+        ownerName: { type: String, default: '' },
+        cardNumber: { type: String, default: '' },
+        expDate: { type: String, default: '' },
+        ccv: { type: String, default: '' }
     }
 });
 

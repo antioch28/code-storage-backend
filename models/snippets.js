@@ -4,14 +4,13 @@ var esquema = new mongoose.Schema({
     name: String,
     description: String,
     ownerId: mongoose.Types.ObjectId,
-    folderId: mongoose.Types.ObjectId,
     created: { type: Date, default: Date.now() },
     lastModified: { type: Date, default: Date.now() },
     starred: { type: Boolean, default: false },
     deleted: { type: Boolean, default: false },
-    deletedOn: { type: Date, default: null },
-    language: String,
-    code: String,
+    deletedOn: { type: String, default: '' },
+    language: { type: String, default: 'text' },
+    code: { type: String, default: '' },
     sharedWith: [{ _id: mongoose.Types.ObjectId }]
 });
 

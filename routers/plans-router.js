@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 
 // Obtener planes
 router.get('/', (req, res) => {
-    Plans.find({})
+    Plans.find({}).sort({ price: 'ascending' })
         .then(data => {
             res.send(data);
             res.end();
@@ -46,7 +46,8 @@ router.post('/', (req, res) => {
 
 // Actualizar un plan
 router.put('/:idPlan', (req, res) => {
-    Plans.findByIdAndUpdate(req.params.idPlan, req.body, { new: true })
+    const { name, price, projects, snippets } = req.body;
+    Plans.findByIdAndUpdate(req.params.idPlan, { $set: { name, price, projects, snippets } }, { new: true })
         .then(data => {
             res.send(data);
             res.end();

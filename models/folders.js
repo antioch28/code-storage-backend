@@ -6,7 +6,7 @@ var esquema = new mongoose.Schema({
     lastModified: { type: Date, default: Date.now() },
     starred: { type: Boolean, default: false },
     deleted: { type: Boolean, default: false },
-    deletedOn: { type: Date, default: null },
+    deletedOn: { type: String, default: '' },
     parentFolder: { type: mongoose.Types.ObjectId, default: null },
     ownerId: mongoose.Types.ObjectId,
     sharedWith: [{ _id: mongoose.Types.ObjectId }]

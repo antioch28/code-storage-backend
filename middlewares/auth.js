@@ -15,6 +15,7 @@ function isAuth(req, res, next) {
     const decoded = tokenService.decodeToken(token);
 
     if (decoded) {
+        //console.log("Decoded: ", decoded);
         req.user = decoded._id;
         next();
     } else {

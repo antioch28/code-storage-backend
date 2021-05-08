@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 const config = require('./config')
 
 function createToken(_id) {
-    return jwt.sign({ _id }, config.SECRET_TOKEN, { expiresIn: "10h" });
+    return jwt.sign({ _id: _id, iat: Date.now() }, config.SECRET_TOKEN, { expiresIn: 4 * 60 * 60 * 1000, issuer: "code-storage", noTimestamp: true });
 }
 
 function decodeToken(token) {
